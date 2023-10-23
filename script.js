@@ -1,77 +1,96 @@
 const gameBoard = (() => {
-    const gameBoard = ["", "", "", "", "", "", "", "", ""];
+    let gameBoard = ["", "", "", "", "", "", "", "", ""];
 
     const render = () => {
         const gameBoardContainer = document.querySelector("#board");
-
+        
+        gameBoardContainer.innerHTML = "";
+        
         gameBoard.forEach((square, index) => {
             gameBoardContainer.innerHTML += `
                 <div class="square" data-index="${index}">${square}</div>
             `;
         });
 
-        gameBoardContainer.addEventListener("click", event => {
-            if (event.target.className != "square") {
-                return;
-            };
+        const squares = document.querySelectorAll(".square");
 
-            console.log(event.target);
-            // game.placeMark();
+        squares.forEach(square => {
+            square.addEventListener("click", event => {
+                game.placeMark(event.target, gameBoard);
+            });
         });
     };
 
-    return { render };
-})();
-
-function createPlayer (mark) {
-    let points = 0;
-    
-    const getPoints = () => points;
-    const givePoints = () => points++;
-
-    return { mark, getPoints, givePoints };
-};
-
-const score = (() => {
-    
-    const render = () => {
-        //
+    const reset = () => {
+        gameBoard = ["", "", "", "", "", "", "", "", ""];
     };
 
-    return { render };
+    return { render, reset };
 })();
 
+// function createPlayer (mark) {
+//     let points = 0;
+    
+//     const getPoints = () => points;
+//     const givePoints = () => points++;
+
+//     return { mark, getPoints, givePoints };
+// };
+
 const game = (() => {
-    // let xTurn;
+    let xTurn;
     
     const start = () => {
+        xTurn = true;
+
         // const playerX = createPlayer("X");
         // const playerO = createPlayer("O");
 
         gameBoard.render();
     };
 
-    const placeMark = () => {
-        //
-    };
+    const placeMark = (square, board) => {
+        const index = square.dataset.index;
+        
+        if (board[index] !== "") {
+            return;
+        };
 
+        if (xTurn) {
+            board[index] = "x";
+        } else {
+            board[index] = "o";
+        };
+
+        xTurn = !xTurn;
+        
+        gameBoard.render();
+    };
+    
     const reset = () => {
-        //
+        // ...
+        // gameBoard.reset()
+        // gameBoard.render();
     };
 
     return { start, placeMark, reset };
 })();
 
+document.querySelector(".btn-new-game").addEventListener("click", event => {
+    game.start();
+});
 
 
 
 
+// const score = (() => {
+    
+//     const render = () => {
+//         //
+//     };
 
-// document.querySelector(".btn-new-game").addEventListener("click", event => {
-//     game.start();
-// });
-
-
+//     return { render };
+// })();
 
 
 
@@ -106,6 +125,29 @@ const game = (() => {
 // allow player to place thier marks
 // create a function that updates the gameBoard array with corresponding mark
 // create a varible that stores all winning positions
-// style the board
 // add a hover effect with a current mark
 
+
+
+ // gameBoard.forEach((square, index) => {
+            
+        //     let display;
+            
+        //     if (square === "") {
+        //         display = "";
+        //     } else if (square === "x") {
+        //         display = '<img src="/assets/icon-x.svg">';
+        //     } else {
+        //         display = '<img src="/assets/icon-o.svg">';
+        //     };
+
+
+        //     gameBoardContainer.innerHTML += `
+        //         <div class="square" data-index="${index}">
+        //             ${square === "" ? "" 
+        //                 : square === "x" ? '<img src="/assets/icon-x.svg">' 
+        //                 : '<img src="/assets/icon-o.svg">'
+        //             }
+        //         </div>
+        //     `;
+        // });
