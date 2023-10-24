@@ -93,13 +93,11 @@ body {
     border-radius: 15px;
     background-color: var(--clr-card-background);
     box-shadow: var(--clr-card-shadow) 0px 8px 0px 0px;
-
-
-
-    color: white;
 }
 
-
+.cell:hover {
+  transform: scale(1.05);
+}
 
 .btn-new-game {
     cursor: pointer;
@@ -159,6 +157,10 @@ body {
   box-shadow: var(--clr-gray-shadow) 0px 4px 0px 0px;
   border-radius: 10px;
   padding: 1.125rem;
+}
+
+.restart button:hover {
+  background-color: var(--clr-gray-active);
 }
 
 

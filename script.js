@@ -59,18 +59,22 @@ const game = (() => {
         if (board[index] !== "") {
             return;
         };
-
+        
         if (xTurn) {
             board[index] = "x";
+            
+            turnDisplay.update("x");
         } else {
             board[index] = "o";
+
+            turnDisplay.update("o");
         };
 
         xTurn = !xTurn;
         
         gameBoard.render();
-
-
+        
+        
         // -------------------------
         if (isDraw(board)) {
             console.log("its a draw!");
@@ -108,20 +112,41 @@ const game = (() => {
         return board.every(square => square === "x" || square === "o");
     };
 
-    const reset = () => {
-        // ...
-        // gameBoard.reset()
-        // gameBoard.render();
+    const restart = () => {
+        xTurn = true;
+        
+        turnDisplay.reset();
+
+        gameBoard.reset();
+        gameBoard.render();
     };
 
-    return { start, placeMark, isWon, isDraw, reset };
+    return { start, placeMark, isWon, isDraw, restart };
 })();
 
-document.querySelector(".btn-new-game").addEventListener("click", event => {
-    game.start();
+const turnDisplay = (() => {
+    const turnIcon = document.querySelector(".turn-img");
+
+    const update = (mark) => {
+        if (mark === "x") {
+            turnIcon.src = "/assets/icon-o.svg";
+        } else {
+            turnIcon.src = "/assets/icon-x.svg";
+        };
+    };
+
+    const reset = () => {
+        turnIcon.src = "/assets/icon-x.svg";
+    };
+    
+    return { update, reset };
+})();
+
+document.querySelector(".restart").addEventListener("click", event => {
+    game.restart();
 });
 
-
+game.start();
 
 
 
@@ -160,10 +185,6 @@ document.querySelector(".btn-new-game").addEventListener("click", event => {
 // })();
 
 
-// hide the new game button on start
-// on start display UI (score/reset/turn)
+// on start display UI (score)
 // add winning message
 // next round button
-// add a hover effect with a current mark
-// style
-// swapturns
