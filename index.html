@@ -10,18 +10,46 @@
     <script src="script.js" defer></script>
 </head>
 <body>
-    <div class="board" id="board">
-        <!-- <div class="square">x</div>
-        <div class="square">x</div>
-        <div class="square">o</div>
-        <div class="square">x</div>
-        <div class="square">o</div>
-        <div class="square">o</div>
-        <div class="square">o</div>
-        <div class="square">x</div>
-        <div class="square">x</div> -->
-    </div>
+    <div class="game">
+        <div class="header">
+            <div class="logo">
+                <img src="/assets/logo.svg" alt="">
+            </div>
+            
+            <div class="turn">
+                <img class="turn-img" src="/assets/icon-x.svg" alt="">
+                <span>TURN</span>
+            </div>
 
+            <div class="restart">
+                <button>
+                    <img src="/assets/icon-restart.svg" alt="">
+                </button>
+            </div>
+        </div>
+
+
+        <div class="board" id="board">
+            <div class="cell">x</div>
+            <div class="cell">x</div>
+            <div class="cell">o</div>
+            <div class="cell">x</div>
+            <div class="cell">o</div>
+            <div class="cell">o</div>
+            <div class="cell">o</div>
+            <div class="cell">x</div>
+            <div class="cell">x</div>
+        </div>
+
+
+        <!-- <div class="score" id="socre">
+            <div class=""></div>
+            <div class=""></div>
+            <div class=""></div>
+        </div> -->
+    </div>
+    
+    
     <button class="btn-new-game">New Game</button>
 </body>
 </html>

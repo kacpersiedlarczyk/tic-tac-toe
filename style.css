@@ -71,12 +71,16 @@ body {
     background-color: var(--clr-main-background);
 }
 
+.game {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
 .board {
     display: grid;
     grid-template-columns: repeat(3, auto);
-    
-    
-    gap: 2rem;
+    gap: inherit;
 }
 
 .cell {
@@ -92,9 +96,10 @@ body {
 
 
 
-
     color: white;
 }
+
+
 
 .btn-new-game {
     cursor: pointer;
@@ -109,3 +114,60 @@ body {
     padding: 1rem;
     /* font-weight: var(--fw-bold); */
 }
+
+
+
+.header {
+  display: grid;
+  grid-template-columns: repeat(3, 140px);
+  gap: inherit;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+}
+
+.turn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: var(--fw-bold);
+  color: var(--clr-gray);
+  background-color: var(--clr-card-background);
+  box-shadow: var(--clr-card-shadow) 0px 4px 0px 0px;
+  border-radius: 10px;
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.turn-img {
+  height: 20px;
+  width: 20px;
+}
+
+.restart {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.restart button {
+  cursor: pointer;
+  border: none;
+  background-color: var(--clr-gray);
+  box-shadow: var(--clr-gray-shadow) 0px 4px 0px 0px;
+  border-radius: 10px;
+  padding: 1.125rem;
+}
+
+
+
+
+
+
+/* .score {
+  display: grid;
+  grid-template-columns: repeat(3, 140px);
+  gap: inherit;
+} */
