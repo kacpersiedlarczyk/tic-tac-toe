@@ -6,36 +6,42 @@ const gameBoard = (() => {
         
         gameBoardContainer.innerHTML = "";
         
-        gameBoard.forEach((square, index) => {
+        gameBoard.forEach((cell, index) => {
             gameBoardContainer.innerHTML += `
-                <div class="square" data-index="${index}">${square}</div>
+                <div class="cell" data-index="${index}">
+                    ${cell === "" 
+                        ? "" 
+                        : cell === "x" 
+                        ? '<img src="/assets/icon-x.svg">' 
+                        : '<img src="/assets/icon-o.svg">'
+                    }
+                </div>
             `;
         });
 
-        const squares = document.querySelectorAll(".square");
+        const cells = document.querySelectorAll(".cell");
 
-        squares.forEach(square => {
-            square.addEventListener("click", event => {
-                game.placeMark(event.target, gameBoard);
+        cells.forEach(cell => {
+            cell.addEventListener("click", event => {
+                if (game.isWon(gameBoard)) {
+                    return;
+                };
+
+                game.placeMark(event.target);
             });
         });
+    };
+
+    const getGameBoard = () => {
+        return gameBoard;
     };
 
     const reset = () => {
         gameBoard = ["", "", "", "", "", "", "", "", ""];
     };
 
-    return { render, reset };
+    return { render, getGameBoard, reset };
 })();
-
-// function createPlayer (mark) {
-//     let points = 0;
-    
-//     const getPoints = () => points;
-//     const givePoints = () => points++;
-
-//     return { mark, getPoints, givePoints };
-// };
 
 const game = (() => {
     let xTurn;
@@ -43,14 +49,12 @@ const game = (() => {
     const start = () => {
         xTurn = true;
 
-        // const playerX = createPlayer("X");
-        // const playerO = createPlayer("O");
-
         gameBoard.render();
     };
 
-    const placeMark = (square, board) => {
-        const index = square.dataset.index;
+    const placeMark = (cell) => {
+        const board = gameBoard.getGameBoard();
+        const index = cell.dataset.index;
         
         if (board[index] !== "") {
             return;
@@ -65,15 +69,52 @@ const game = (() => {
         xTurn = !xTurn;
         
         gameBoard.render();
+
+
+        // -------------------------
+        if (isDraw(board)) {
+            console.log("its a draw!");
+        } else if (isWon(board) === "x") {
+            console.log("the winner is x!");
+        } else if (isWon(board) === "o") {
+            console.log("the winner is o!");
+        };
     };
     
+    const isWon = (board) => {
+        const winningCombinations = [
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            [0, 4, 8],
+            [2, 4, 6]
+        ];
+
+        for (let i = 0; i < winningCombinations.length; i++) {
+            const [a, b, c] = winningCombinations[i];
+
+            if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+                return board[a];
+            };
+        };
+
+        return null;
+    };
+
+    const isDraw = (board) => {
+        return board.every(square => square === "x" || square === "o");
+    };
+
     const reset = () => {
         // ...
         // gameBoard.reset()
         // gameBoard.render();
     };
 
-    return { start, placeMark, reset };
+    return { start, placeMark, isWon, isDraw, reset };
 })();
 
 document.querySelector(".btn-new-game").addEventListener("click", event => {
@@ -83,71 +124,46 @@ document.querySelector(".btn-new-game").addEventListener("click", event => {
 
 
 
-// const score = (() => {
+
+
+
+
+
+
+// function createPlayer (mark) {
+//     let points = 0;
     
-//     const render = () => {
-//         //
+//     const getPoints = () => points;
+//     const givePoints = () => points++;
+
+//     return { mark, getPoints, givePoints };
+// };
+
+
+// const score = (() => {
+    // let xPoints = 0;
+    // let oPoints = 0;
+    // let draws = 0;
+    
+//     const render/display/start = () => {
+//         
+//     };
+
+//     const update = () => {
+//          const board = gameBoard.getGameBoard();
+//          if (game.isDraw(board)) -> draws++
+//          if (game.isWon(board)) -> xPoints++
+//          if (game.isWon(board)) -> xPoints++
 //     };
 
 //     return { render };
 // })();
 
 
-
-
-// xTurn
-// currentPlayer = playerX;
-
-// let players = [];
-
-// const playerX = createPlayer("X");
-// const playerO = createPlayer("O");
-
-// players.push(playerX);
-// players.push(playerO);
-
-// console.log(playerX.mark);
-// console.log(playerO.mark);
-
-
-// let players = [playerX, playerO];
-
-// players[0].mark => "X";
-
-// console.log(players);
-
-
-
-
-// default/first mark should be an "X"
-// start function => what needs to happen when the game starts
-// won method should take board as a argument!
-// allow player to place thier marks
-// create a function that updates the gameBoard array with corresponding mark
-// create a varible that stores all winning positions
+// hide the new game button on start
+// on start display UI (score/reset/turn)
+// add winning message
+// next round button
 // add a hover effect with a current mark
-
-
-
- // gameBoard.forEach((square, index) => {
-            
-        //     let display;
-            
-        //     if (square === "") {
-        //         display = "";
-        //     } else if (square === "x") {
-        //         display = '<img src="/assets/icon-x.svg">';
-        //     } else {
-        //         display = '<img src="/assets/icon-o.svg">';
-        //     };
-
-
-        //     gameBoardContainer.innerHTML += `
-        //         <div class="square" data-index="${index}">
-        //             ${square === "" ? "" 
-        //                 : square === "x" ? '<img src="/assets/icon-x.svg">' 
-        //                 : '<img src="/assets/icon-o.svg">'
-        //             }
-        //         </div>
-        //     `;
-        // });
+// style
+// swapturns
